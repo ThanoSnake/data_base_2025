@@ -1,0 +1,46 @@
+MariaDB [pulse_uni_schema]>  SELECT
+    ->     f.festival_id,
+    ->     f.festival_name,
+    ->      DATE(e.start_time) AS festival_day,
+    ->     SUM(CASE WHEN s.job = 'technical' THEN 1 ELSE 0 END) AS techincal_staff,
+    ->     SUM(CASE WHEN s.job = 'security' THEN 1 ELSE 0 END) AS security_staff,
+    ->     SUM(CASE WHEN s.job = 'assistant' THEN 1 ELSE 0 END) AS assistant_staff
+    -> FROM staff s
+    -> JOIN staff_event se ON s.staff_id = se.staff_id
+    -> JOIN event e ON se.event_id = e.event_id
+    -> JOIN festival f ON e.festival_id = f.festival_id
+    -> GROUP BY f.festival_id, f.festival_name, festival_day;
++-------------+------------------------+--------------+-----------------+----------------+-----------------+
+| festival_id | festival_name          | festival_day | techincal_staff | security_staff | assistant_staff |
++-------------+------------------------+--------------+-----------------+----------------+-----------------+
+|           1 | TechWorld Summit       | 2016-06-10   |               2 |             12 |               5 |
+|           1 | TechWorld Summit       | 2016-06-11   |               2 |             14 |               6 |
+|           1 | TechWorld Summit       | 2016-06-12   |               1 |              7 |               3 |
+|           2 | London Arts Festival   | 2018-07-01   |               2 |             13 |               6 |
+|           2 | London Arts Festival   | 2018-07-02   |               2 |             14 |               6 |
+|           2 | London Arts Festival   | 2018-07-03   |               1 |              7 |               3 |
+|           3 | Tokyo Light Festival   | 2020-03-15   |               2 |             13 |               6 |
+|           3 | Tokyo Light Festival   | 2020-03-16   |               2 |             14 |               6 |
+|           3 | Tokyo Light Festival   | 2020-03-17   |               1 |              6 |               3 |
+|           4 | Barcelona Music Fiesta | 2021-09-10   |               2 |             13 |               6 |
+|           4 | Barcelona Music Fiesta | 2021-09-11   |               2 |             16 |               6 |
+|           4 | Barcelona Music Fiesta | 2021-09-12   |               1 |              6 |               3 |
+|           5 | Berlin Film Festival   | 2019-02-10   |               2 |             13 |               6 |
+|           5 | Berlin Film Festival   | 2019-02-11   |               2 |             13 |               6 |
+|           5 | Berlin Film Festival   | 2019-02-12   |               1 |              5 |               2 |
+|           6 | Sydney Harbour Show    | 2022-01-01   |               2 |             13 |               6 |
+|           6 | Sydney Harbour Show    | 2022-01-02   |               2 |             12 |               5 |
+|           6 | Sydney Harbour Show    | 2022-01-03   |               1 |              6 |               3 |
+|           7 | Mexico Day Parade      | 2017-11-20   |               2 |             12 |               5 |
+|           7 | Mexico Day Parade      | 2017-11-21   |               3 |             21 |               9 |
+|           8 | Heritage Festival SA   | 2023-04-27   |               2 |             13 |               6 |
+|           8 | Heritage Festival SA   | 2023-04-28   |               2 |             14 |               6 |
+|           8 | Heritage Festival SA   | 2023-04-29   |               1 |              7 |               3 |
+|           9 | Moscow Ice Carnival    | 2026-12-10   |               2 |             13 |               6 |
+|           9 | Moscow Ice Carnival    | 2026-12-11   |               2 |             14 |               6 |
+|           9 | Moscow Ice Carnival    | 2026-12-12   |               1 |              6 |               3 |
+|          10 | Rio Carnival Beats     | 2027-02-15   |               2 |             13 |               6 |
+|          10 | Rio Carnival Beats     | 2027-02-16   |               2 |             16 |               6 |
+|          10 | Rio Carnival Beats     | 2027-02-17   |               1 |              6 |               3 |
++-------------+------------------------+--------------+-----------------+----------------+-----------------+
+29 rows in set (0.004 sec)

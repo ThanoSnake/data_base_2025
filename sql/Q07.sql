@@ -1,0 +1,27 @@
+#-------------------QUERY 7----------------#
+WITH temp1 AS (
+    SELECT staff_id,
+        CASE WHEN experience_level = 'Specialist' THEN 1 
+            WHEN experience_level = 'Beginner' THEN 2
+            WHEN experience_level = 'Intermediate' THEN 3 
+            WHEN experience_level = 'Experienced' THEN 4 
+            WHEN experience_level = 'Very Experienced' THEN 5
+        END AS experience_level_numerated
+        FROM staff FORCE INDEX (idx_staff_job)
+        WHERE job = 'technical'
+),
+temp2 AS(
+    SELECT 
+    f.festival_id,
+    f.festival_name,
+    AVG(CAST(t1.experience_level_numerated AS FLOAT)) AS tech_experience_level_score
+    FROM temp1 t1
+    JOIN staff_event se ON t1.staff_id = se.staff_id
+    JOIN event e ON se.event_id = e.event_id
+    JOIN festival f ON e.festival_id = f.festival_id
+    GROUP BY f.festival_id, f.festival_name
+)
+SELECT *
+FROM temp2
+ORDER BY tech_experience_level_score
+LIMIT 1;

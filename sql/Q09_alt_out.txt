@@ -1,0 +1,32 @@
+MariaDB [pulse_uni_schema]> WITH visitors_min_appearances AS (
+    -> SELECT
+    ->     v.visitor_id,
+    ->     v.visitor_name,
+    ->     YEAR(e.start_time) AS year,
+    ->     COUNT(DISTINCT e.event_id) AS num_events
+    -> FROM visitor v
+    -> JOIN ticket t FORCE INDEX (unique_ticket_per_visitor) ON v.visitor_id = t.visitor_id
+    -> JOIN event e ON t.event_id = e.event_id
+    -> WHERE t.active = FALSE
+    -> GROUP BY v.visitor_id, YEAR(e.start_time)
+    -> HAVING num_events > 3
+    -> )
+    -> SELECT DISTINCT
+    -> vma1.visitor_id,
+    -> vma1.visitor_name,
+    -> vma1.year,
+    -> vma1.num_events
+    -> FROM visitors_min_appearances vma1
+    -> JOIN visitors_min_appearances vma2 ON vma1.year = vma2.year AND vma1.num_events = vma2.num_events AND vma1.visitor_id != vma2.visitor_id
+    -> ORDER BY year;
++------------+---------------+------+------------+
+| visitor_id | visitor_name  | year | num_events |
++------------+---------------+------+------------+
+|          2 | Ben Carter    | 2016 |          4 |
+|          1 | Alice Johnson | 2016 |          4 |
+|         22 | Victor Li     | 2017 |          4 |
+|         21 | Uma Sanchez   | 2017 |          4 |
+|         41 | Opal Jensen   | 2020 |          5 |
+|         42 | Preston Hale  | 2020 |          5 |
++------------+---------------+------+------------+
+6 rows in set (0.003 sec)

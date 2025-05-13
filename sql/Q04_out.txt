@@ -1,0 +1,9 @@
+MariaDB [pulse_uni_schema]> call avg_review_of_artist_1('Elias Romero');
++-----------+--------------+-----------+-------------------------------+-------------------------------+
+| artist_id | artist_name  | pseudonym | avg_artist_performance_review | avg_overall_impression_review |
++-----------+--------------+-----------+-------------------------------+-------------------------------+
+|        29 | Elias Romero | ERo       |                        2.6250 |                        3.7500 |
++-----------+--------------+-----------+-------------------------------+-------------------------------+
+1 row in set (0.001 sec)
+
+Query OK, 0 rows affected (0.012 sec)

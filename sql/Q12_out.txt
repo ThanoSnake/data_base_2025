@@ -1,0 +1,60 @@
+MariaDB [pulse_uni_schema]> call staff_info(1);
++-------------+------------------+----------+--------------+-----+-----------------------+------------------+-----------+--------------+
+| festival_id | festival_name    | staff_id | staff_name   | age | role                  | experience_level | job       | festival_day |
++-------------+------------------+----------+--------------+-----+-----------------------+------------------+-----------+--------------+
+|           1 | TechWorld Summit |        5 | Ella Tran    |  22 | Event Assistant       | Beginner         | assistant | 2016-06-10   |
+|           1 | TechWorld Summit |        9 | Isla Ahmed   |  27 | Volunteer Coordinator | Experienced      | assistant | 2016-06-10   |
+|           1 | TechWorld Summit |        9 | Isla Ahmed   |  27 | Volunteer Coordinator | Experienced      | assistant | 2016-06-10   |
+|           1 | TechWorld Summit |       35 | Ines Duarte  |  24 | Registration Desk     | Beginner         | assistant | 2016-06-10   |
+|           1 | TechWorld Summit |       35 | Ines Duarte  |  24 | Registration Desk     | Beginner         | assistant | 2016-06-10   |
+|           1 | TechWorld Summit |        4 | Daniel Reyes |  31 | Security Supervisor   | Experienced      | security  | 2016-06-10   |
+|           1 | TechWorld Summit |        4 | Daniel Reyes |  31 | Security Supervisor   | Experienced      | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       11 | Karen Singh  |  33 | First Responder       | Specialist       | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       11 | Karen Singh  |  33 | First Responder       | Specialist       | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       25 | Yasmin Omar  |  26 | Crowd Manager         | Intermediate     | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       28 | Brent Owen   |  34 | Emergency Response    | Experienced      | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       28 | Brent Owen   |  34 | Emergency Response    | Experienced      | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       32 | Felix Jones  |  31 | Roving Security       | Experienced      | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       32 | Felix Jones  |  31 | Roving Security       | Experienced      | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       40 | Nico Alvarez |  30 | Security Rover        | Intermediate     | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       49 | Willa Stone  |  25 | Crowd Flow Monitor    | Beginner         | security  | 2016-06-10   |
+|           1 | TechWorld Summit |       49 | Willa Stone  |  25 | Crowd Flow Monitor    | Beginner         | security  | 2016-06-10   |
+|           1 | TechWorld Summit |        1 | Alice Morgan |  29 | Stage Technician      | Experienced      | technical | 2016-06-10   |
+|           1 | TechWorld Summit |        2 | Ben Carter   |  34 | Lighting Crew         | Intermediate     | technical | 2016-06-10   |
+|           1 | TechWorld Summit |        5 | Ella Tran    |  22 | Event Assistant       | Beginner         | assistant | 2016-06-11   |
+|           1 | TechWorld Summit |        5 | Ella Tran    |  22 | Event Assistant       | Beginner         | assistant | 2016-06-11   |
+|           1 | TechWorld Summit |        9 | Isla Ahmed   |  27 | Volunteer Coordinator | Experienced      | assistant | 2016-06-11   |
+|           1 | TechWorld Summit |        9 | Isla Ahmed   |  27 | Volunteer Coordinator | Experienced      | assistant | 2016-06-11   |
+|           1 | TechWorld Summit |       35 | Ines Duarte  |  24 | Registration Desk     | Beginner         | assistant | 2016-06-11   |
+|           1 | TechWorld Summit |       35 | Ines Duarte  |  24 | Registration Desk     | Beginner         | assistant | 2016-06-11   |
+|           1 | TechWorld Summit |        4 | Daniel Reyes |  31 | Security Supervisor   | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |        4 | Daniel Reyes |  31 | Security Supervisor   | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       11 | Karen Singh  |  33 | First Responder       | Specialist       | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       11 | Karen Singh  |  33 | First Responder       | Specialist       | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       25 | Yasmin Omar  |  26 | Crowd Manager         | Intermediate     | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       25 | Yasmin Omar  |  26 | Crowd Manager         | Intermediate     | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       28 | Brent Owen   |  34 | Emergency Response    | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       28 | Brent Owen   |  34 | Emergency Response    | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       32 | Felix Jones  |  31 | Roving Security       | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       32 | Felix Jones  |  31 | Roving Security       | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       40 | Nico Alvarez |  30 | Security Rover        | Intermediate     | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       42 | Preston Hale |  33 | Barrier Control       | Experienced      | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       49 | Willa Stone  |  25 | Crowd Flow Monitor    | Beginner         | security  | 2016-06-11   |
+|           1 | TechWorld Summit |       49 | Willa Stone  |  25 | Crowd Flow Monitor    | Beginner         | security  | 2016-06-11   |
+|           1 | TechWorld Summit |        3 | Chloe Kim    |  26 | Sound Engineer        | Very Experienced | technical | 2016-06-11   |
+|           1 | TechWorld Summit |        6 | Frank Silva  |  38 | Electrician           | Specialist       | technical | 2016-06-11   |
+|           1 | TechWorld Summit |        5 | Ella Tran    |  22 | Event Assistant       | Beginner         | assistant | 2016-06-12   |
+|           1 | TechWorld Summit |        9 | Isla Ahmed   |  27 | Volunteer Coordinator | Experienced      | assistant | 2016-06-12   |
+|           1 | TechWorld Summit |       35 | Ines Duarte  |  24 | Registration Desk     | Beginner         | assistant | 2016-06-12   |
+|           1 | TechWorld Summit |        4 | Daniel Reyes |  31 | Security Supervisor   | Experienced      | security  | 2016-06-12   |
+|           1 | TechWorld Summit |       11 | Karen Singh  |  33 | First Responder       | Specialist       | security  | 2016-06-12   |
+|           1 | TechWorld Summit |       25 | Yasmin Omar  |  26 | Crowd Manager         | Intermediate     | security  | 2016-06-12   |
+|           1 | TechWorld Summit |       28 | Brent Owen   |  34 | Emergency Response    | Experienced      | security  | 2016-06-12   |
+|           1 | TechWorld Summit |       32 | Felix Jones  |  31 | Roving Security       | Experienced      | security  | 2016-06-12   |
+|           1 | TechWorld Summit |       40 | Nico Alvarez |  30 | Security Rover        | Intermediate     | security  | 2016-06-12   |
+|           1 | TechWorld Summit |       49 | Willa Stone  |  25 | Crowd Flow Monitor    | Beginner         | security  | 2016-06-12   |
+|           1 | TechWorld Summit |        7 | Grace Liu    |  25 | Stagehand             | Intermediate     | technical | 2016-06-12   |
++-------------+------------------+----------+--------------+-----+-----------------------+------------------+-----------+--------------+
+52 rows in set (0.002 sec)
+
+Query OK, 0 rows affected (0.326 sec)

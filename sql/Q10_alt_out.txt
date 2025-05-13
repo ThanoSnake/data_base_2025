@@ -1,0 +1,73 @@
+MariaDB [pulse_uni_schema]> WITH genre_pairs AS (
+    ->     SELECT DISTINCT
+    ->         ag1.artist_id,
+    ->         LEAST(ag1.genre, ag2.genre) AS genre1,
+    ->         GREATEST(ag1.genre, ag2.genre) AS genre2
+    ->     FROM artist_genre ag1
+    ->     JOIN artist_genre ag2
+    ->         ON ag1.artist_id = ag2.artist_id
+    ->     WHERE ag1.genre < ag2.genre
+    -> ),
+    -> pair_festivals AS (
+    ->     SELECT
+    ->         f.festival_id,
+    ->         f.festival_name,
+    ->         gp.genre1,
+    ->         gp.genre2,
+    ->         COUNT(DISTINCT gp.artist_id) AS artist_count
+    ->     FROM genre_pairs gp
+    ->     JOIN performance_artist pa ON gp.artist_id = pa.artist_id
+    ->     JOIN performance p ON pa.performance_id = p.performance_id
+    ->     JOIN event e ON p.event_id = e.event_id
+    ->     JOIN festival f ON e.festival_id = f.festival_id
+    ->     GROUP BY f.festival_id, f.festival_name, gp.genre1, gp.genre2
+    -> ),
+    -> ranked_pairs AS (
+    ->     SELECT *,
+    ->         ROW_NUMBER() OVER (
+    ->             PARTITION BY festival_id
+    ->             ORDER BY artist_count DESC
+    ->         ) AS rank
+    ->     FROM pair_festivals
+    -> )
+    -> SELECT
+    ->     festival_id,
+    ->     festival_name,
+    ->     genre1,
+    ->     genre2,
+    ->     artist_count AS genre_tuple_count
+    -> FROM ranked_pairs
+    -> WHERE rank <= 3
+    -> ORDER BY festival_id, rank;
++-------------+------------------------+------------+--------+-------------------+
+| festival_id | festival_name          | genre1     | genre2 | genre_tuple_count |
++-------------+------------------------+------------+--------+-------------------+
+|           1 | TechWorld Summit       | Jazz       | Pop    |                 2 |
+|           1 | TechWorld Summit       | Pop        | R&B    |                 1 |
+|           1 | TechWorld Summit       | Electronic | Pop    |                 1 |
+|           2 | London Arts Festival   | Electronic | Pop    |                 2 |
+|           2 | London Arts Festival   | Jazz       | Pop    |                 2 |
+|           2 | London Arts Festival   | Pop        | R&B    |                 1 |
+|           3 | Tokyo Light Festival   | Pop        | R&B    |                 1 |
+|           3 | Tokyo Light Festival   | Hip Hop    | Jazz   |                 1 |
+|           3 | Tokyo Light Festival   | Jazz       | Pop    |                 1 |
+|           4 | Barcelona Music Fiesta | Pop        | R&B    |                 1 |
+|           4 | Barcelona Music Fiesta | Electronic | Pop    |                 1 |
+|           4 | Barcelona Music Fiesta | Hip Hop    | Jazz   |                 1 |
+|           5 | Berlin Film Festival   | Electronic | Pop    |                 3 |
+|           5 | Berlin Film Festival   | Jazz       | Pop    |                 3 |
+|           5 | Berlin Film Festival   | Pop        | Rock   |                 3 |
+|           6 | Sydney Harbour Show    | Electronic | Pop    |                 2 |
+|           6 | Sydney Harbour Show    | Electronic | Jazz   |                 1 |
+|           6 | Sydney Harbour Show    | Jazz       | Pop    |                 1 |
+|           7 | Mexico Day Parade      | Jazz       | Pop    |                 3 |
+|           7 | Mexico Day Parade      | Electronic | Rock   |                 2 |
+|           7 | Mexico Day Parade      | Hip Hop    | Jazz   |                 2 |
+|           9 | Moscow Ice Carnival    | Electronic | Pop    |                 2 |
+|           9 | Moscow Ice Carnival    | Electronic | Rock   |                 1 |
+|           9 | Moscow Ice Carnival    | Classical  | Pop    |                 1 |
+|          10 | Rio Carnival Beats     | Jazz       | Pop    |                 2 |
+|          10 | Rio Carnival Beats     | Electronic | Pop    |                 1 |
+|          10 | Rio Carnival Beats     | Pop        | Rock   |                 1 |
++-------------+------------------------+------------+--------+-------------------+
+27 rows in set (0.003 sec)

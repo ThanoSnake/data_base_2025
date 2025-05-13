@@ -1,0 +1,26 @@
+MariaDB [pulse_uni_schema]> SELECT
+    ->     YEAR(e.start_time) AS festival_year,
+    ->     SUM(CASE WHEN t.purchase_method = 'cash' THEN t.cost ELSE 0 END) AS cash,
+    ->     SUM(CASE WHEN t.purchase_method = 'debit_card' THEN t.cost ELSE 0 END) AS debit_card,
+    ->     SUM(CASE WHEN t.purchase_method = 'credit_card' THEN t.cost ELSE 0 END) AS credit_card,
+    ->     SUM(CASE WHEN t.purchase_method = 'bank_account' THEN t.cost ELSE 0 END) AS bank_account,
+    ->     SUM(CASE WHEN t.purchase_method = 'non_cash' THEN t.cost ELSE 0 END) AS non_cash,
+    ->     SUM(t.cost) AS total_earnings
+    -> FROM ticket t
+    -> JOIN event e ON t.event_id = e.event_id
+    -> GROUP BY festival_year
+    -> ORDER BY festival_year;
++---------------+------+------------+-------------+--------------+----------+----------------+
+| festival_year | cash | debit_card | credit_card | bank_account | non_cash | total_earnings |
++---------------+------+------------+-------------+--------------+----------+----------------+
+|          2016 |  300 |        650 |         450 |          425 |        0 |           1825 |
+|          2017 |  325 |        450 |         655 |          450 |        0 |           1880 |
+|          2018 |  350 |        475 |         350 |          475 |        0 |           1650 |
+|          2019 |  500 |        625 |         500 |          625 |        0 |           2250 |
+|          2020 |  400 |        525 |        1240 |          525 |        0 |           2690 |
+|          2021 |  450 |        575 |         450 |          575 |        0 |           2050 |
+|          2022 |  550 |        675 |         550 |          675 |        0 |           2450 |
+|          2023 |  375 |        500 |         375 |          500 |        0 |           1750 |
+|          2026 |  425 |        550 |         425 |          550 |        0 |           1950 |
+|          2027 |  425 |        550 |         425 |          550 |        0 |           1950 |
++---------------+------+------------+-------------+--------------+----------+----------------+

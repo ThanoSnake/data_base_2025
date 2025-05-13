@@ -1,0 +1,32 @@
+MariaDB [pulse_uni_schema]> WITH warmup_performances AS (
+    ->     SELECT
+    ->         pa.artist_id,
+    ->         a.artist_name,
+    ->         a.pseudonym,
+    ->         YEAR(p.start_time) AS festival_year,
+    ->         COUNT(*) AS warmup_count
+    ->     FROM artist a
+    ->     JOIN performance_artist pa ON a.artist_id = pa.artist_id
+    ->     JOIN performance p FORCE INDEX (idx_type_of_performance) ON pa.performance_id = p.performance_id
+    ->     WHERE p.type_of_performance = 'warm up'
+    ->     GROUP BY a.artist_id, a.artist_name, a.pseudonym, YEAR(p.start_time)
+    -> ),
+    -> warmup_filtered AS (
+    ->     SELECT *
+    ->     FROM warmup_performances
+    ->     WHERE warmup_count > 2
+    -> )
+    -> SELECT *
+    -> FROM warmup_filtered
+    -> ORDER BY festival_year, warmup_count DESC;
++-----------+---------------+-----------+---------------+--------------+
+| artist_id | artist_name   | pseudonym | festival_year | warmup_count |
++-----------+---------------+-----------+---------------+--------------+
+|        32 | Hana Sato     | NULL      |          2016 |            4 |
+|        30 | Freya Lund    | NULL      |          2016 |            4 |
+|        33 | Ivan Petrov   | I.P.      |          2016 |            4 |
+|        31 | Gabriel Costa | GC        |          2016 |            4 |
+|        29 | Elias Romero  | ERo       |          2016 |            4 |
+|        15 | Olivia Hayes  | LivH      |          2020 |            3 |
++-----------+---------------+-----------+---------------+--------------+
+6 rows in set (0.002 sec)

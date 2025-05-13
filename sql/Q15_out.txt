@@ -1,0 +1,22 @@
+MariaDB [pulse_uni_schema]> SELECT
+    -> v.visitor_id,
+    -> v.visitor_name,
+    -> a.artist_id,
+    -> a.artist_name,
+    -> r.artist_performance + r.sound_lighting + r.stage_presence + r.organization + r.overall_impression AS overall_score
+    -> FROM visitor v
+    -> JOIN review r ON v.visitor_id = r.visitor_id
+    -> JOIN performance_artist pa ON r.performance_id = pa.performance_id
+    -> JOIN artist a ON pa.artist_id = a.artist_id
+    -> ORDER BY overall_score DESC
+    -> LIMIT 5;
++------------+---------------+-----------+---------------+---------------+
+| visitor_id | visitor_name  | artist_id | artist_name   | overall_score |
++------------+---------------+-----------+---------------+---------------+
+|          2 | Ben Carter    |        12 | Liam Berg     |            22 |
+|          4 | Daniel Reyes  |        12 | Liam Berg     |            20 |
+|          8 | Hugo Novak    |        19 | Samuel Ortega |            19 |
+|          1 | Alice Johnson |        29 | Elias Romero  |            18 |
+|          1 | Alice Johnson |        30 | Freya Lund    |            18 |
++------------+---------------+-----------+---------------+---------------+
+5 rows in set (0.001 sec)

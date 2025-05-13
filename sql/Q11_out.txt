@@ -1,0 +1,51 @@
+MariaDB [pulse_uni_schema]> WITH tot_apps_of_artists AS (
+    -> SELECT
+    -> a.artist_id,
+    -> a.artist_name,
+    -> COUNT(DISTINCT f.festival_id) AS total_artist_appearances
+    -> FROM artist a
+    -> JOIN performance_artist pa ON a.artist_id = pa.artist_id
+    -> JOIN performance p ON pa.performance_id = p.performance_id
+    -> JOIN event e ON p.event_id = e.event_id
+    -> JOIN festival f ON e.festival_id = f.festival_id
+    -> GROUP BY a.artist_id, a.artist_name
+    -> )
+    ->
+    -> SELECT *
+    -> FROM tot_apps_of_artists
+    -> WHERE total_artist_appearances - (SELECT MAX(total_artist_appearances) FROM tot_apps_of_artists ) <= -5
+    -> ORDER BY total_artist_appearances DESC;
++-----------+-----------------+--------------------------+
+| artist_id | artist_name     | total_artist_appearances |
++-----------+-----------------+--------------------------+
+|        39 | Oscar Alvarez   |                        3 |
+|        12 | Liam Berg       |                        3 |
+|        20 | Tessa Bloom     |                        3 |
+|        17 | Quinn Avery     |                        3 |
+|        49 | Zane Walker     |                        3 |
+|        38 | Nora Jensen     |                        3 |
+|        16 | Pedro Silva     |                        3 |
+|        40 | Priya Nair      |                        3 |
+|        21 | Uriel Cohen     |                        3 |
+|        37 | Matteo Bianchi  |                        3 |
+|        18 | Rina Kapoor     |                        3 |
+|        26 | Zara Khalid     |                        3 |
+|        50 | Alice Edwards   |                        3 |
+|        23 | William Tan     |                        2 |
+|        44 | Usha Patel      |                        2 |
+|         7 | Gabriella Stone |                        2 |
+|        41 | Rafael Mendes   |                        2 |
+|        43 | Tobias Nielsen  |                        2 |
+|         6 | Felix Turner    |                        2 |
+|        24 | Xenia Lopez     |                        2 |
+|        45 | Victor Hugo     |                        2 |
+|        42 | Selina Wu       |                        2 |
+|        15 | Olivia Hayes    |                        1 |
+|         3 | Chloe Rivera    |                        1 |
+|        14 | Noah Schmidt    |                        1 |
+|        22 | Valeria Rossi   |                        1 |
+|         9 | Isabelle Moreau |                        1 |
+|         2 | Benjamin Clark  |                        1 |
+|         8 | Hiro Tanaka     |                        1 |
++-----------+-----------------+--------------------------+
+29 rows in set (0.004 sec)

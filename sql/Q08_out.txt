@@ -1,0 +1,20 @@
+MariaDB [pulse_uni_schema]> call free_assistant_staff_for_date('2016-06-10');
++----------+---------------+-----+----------------------+------------------+-----------+
+| staff_id | staff_name    | age | role                 | experience_level | job       |
++----------+---------------+-----+----------------------+------------------+-----------+
+|        8 | Hugo Novak    |  41 | Backstage Manager    | Very Experienced | assistant |
+|       13 | Maya Patel    |  24 | Logistics Assistant  | Intermediate     | assistant |
+|       15 | Olivia Garcia |  21 | Entry Gate Assistant | Beginner         | assistant |
+|       19 | Sophia Lane   |  27 | Performer Liaison    | Intermediate     | assistant |
+|       23 | Wendy Zhou    |  23 | Wardrobe Assistant   | Beginner         | assistant |
+|       26 | Zane Adler    |  28 | Transport Assistant  | Intermediate     | assistant |
+|       29 | Carla Dawson  |  37 | Performer Assistant  | Very Experienced | assistant |
+|       33 | Gina Russo    |  26 | Artist Check-in      | Intermediate     | assistant |
+|       39 | Marina Costa  |  31 | Artist Runner        | Experienced      | assistant |
+|       43 | Queenie Sharp |  23 | Backline Assistant   | Beginner         | assistant |
+|       45 | Sasha Dean    |  28 | Hospitality Host     | Intermediate     | assistant |
+|       47 | Uma Voss      |  27 | Performer Chaperone  | Intermediate     | assistant |
++----------+---------------+-----+----------------------+------------------+-----------+
+12 rows in set (0.002 sec)
+
+Query OK, 0 rows affected (0.066 sec)

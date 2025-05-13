@@ -1,0 +1,17 @@
+MariaDB [pulse_uni_schema]> call get_artists_by_genre_and_year_cte(2016, 'Rock');
++-----------+----------------+-----------+-------+------------------+----------------------+
+| artist_id | artist_name    | pseudonym | genre | subgenre         | participated_in_year |
++-----------+----------------+-----------+-------+------------------+----------------------+
+|        27 | Aiden Brooks   | AidoB     | Rock  | Garage Rock      | YES                  |
+|        35 | Karl Meier     | KMeier    | Rock  | Indie Rock       | YES                  |
+|         2 | Benjamin Clark | NULL      | Rock  | Indie Rock       | NO                   |
+|         6 | Felix Turner   | NULL      | Rock  | Punk             | NO                   |
+|        11 | Kira Novak     | KNovak    | Rock  | Classic Rock     | NO                   |
+|        37 | Matteo Bianchi | MattB     | Rock  | Psychedelic Rock | NO                   |
+|        42 | Selina Wu      | NULL      | Rock  | Indie Rock       | NO                   |
+|        44 | Usha Patel     | NULL      | Rock  | Post Rock        | NO                   |
+|        48 | Yara Mendes    | NULL      | Rock  | Alternative Rock | NO                   |
++-----------+----------------+-----------+-------+------------------+----------------------+
+9 rows in set (0.080 sec)
+
+Query OK, 0 rows affected (0.152 sec)

@@ -1,0 +1,96 @@
+MariaDB [pulse_uni_schema]> WITH visitor_artist_avg AS (
+    ->     SELECT
+    ->         a.artist_id,
+    ->         a.artist_name,
+    ->         v.visitor_id,
+    ->         v.visitor_name,
+    ->         AVG(r.artist_performance) AS avg_artist_score
+    ->     FROM review r
+    ->     JOIN visitor v ON r.visitor_id = v.visitor_id
+    ->     JOIN performance_artist pa ON r.performance_id = pa.performance_id
+    ->     JOIN artist a ON pa.artist_id = a.artist_id
+    ->     GROUP BY a.artist_id, a.artist_name, v.visitor_id, v.visitor_name
+    -> ),
+    -> ranked_reviews AS (
+    ->     SELECT *,
+    ->         ROW_NUMBER() OVER (
+    ->             PARTITION BY artist_id
+    ->             ORDER BY avg_artist_score DESC
+    ->         ) AS rn
+    ->     FROM visitor_artist_avg
+    -> )
+    -> SELECT
+    -> artist_id,
+    -> artist_name,
+    -> visitor_id,
+    -> visitor_name,
+    -> avg_artist_score
+    -> FROM ranked_reviews
+    -> WHERE rn <= 5
+    -> ORDER BY artist_id, avg_artist_score DESC;
++-----------+----------------+------------+---------------+------------------+
+| artist_id | artist_name    | visitor_id | visitor_name  | avg_artist_score |
++-----------+----------------+------------+---------------+------------------+
+|         2 | Benjamin Clark |         28 | Brent Owen    |           4.0000 |
+|        12 | Liam Berg      |          2 | Ben Carter    |           5.0000 |
+|        12 | Liam Berg      |          4 | Daniel Reyes  |           4.0000 |
+|        12 | Liam Berg      |          1 | Alice Johnson |           1.0000 |
+|        16 | Pedro Silva    |         21 | Uma Sanchez   |           5.0000 |
+|        16 | Pedro Silva    |         23 | Wendy Zhou    |           5.0000 |
+|        19 | Samuel Ortega  |         27 | Amara Bennett |           5.0000 |
+|        19 | Samuel Ortega  |          8 | Hugo Novak    |           2.0000 |
+|        19 | Samuel Ortega  |         25 | Yasmin Omar   |           2.0000 |
+|        25 | Yusuf El-Amin  |         17 | Quinn Harper  |           5.0000 |
+|        25 | Yusuf El-Amin  |         15 | Olivia Garcia |           3.0000 |
+|        25 | Yusuf El-Amin  |         19 | Sophia Lane   |           3.0000 |
+|        25 | Yusuf El-Amin  |         13 | Maya Patel    |           1.0000 |
+|        26 | Zara Khalid    |         17 | Quinn Harper  |           5.0000 |
+|        26 | Zara Khalid    |         15 | Olivia Garcia |           3.0000 |
+|        26 | Zara Khalid    |         19 | Sophia Lane   |           3.0000 |
+|        26 | Zara Khalid    |         13 | Maya Patel    |           1.0000 |
+|        27 | Aiden Brooks   |         17 | Quinn Harper  |           5.0000 |
+|        27 | Aiden Brooks   |         19 | Sophia Lane   |           3.0000 |
+|        28 | Beatriz Santos |         17 | Quinn Harper  |           5.0000 |
+|        28 | Beatriz Santos |         19 | Sophia Lane   |           3.0000 |
+|        29 | Elias Romero   |         11 | Karen Singh   |           5.0000 |
+|        29 | Elias Romero   |         20 | Tariq White   |           4.0000 |
+|        29 | Elias Romero   |          1 | Alice Johnson |           3.0000 |
+|        29 | Elias Romero   |          7 | Grace Liu     |           3.0000 |
+|        29 | Elias Romero   |          9 | Isla Ahmed    |           1.0000 |
+|        30 | Freya Lund     |         11 | Karen Singh   |           5.0000 |
+|        30 | Freya Lund     |         20 | Tariq White   |           4.0000 |
+|        30 | Freya Lund     |          7 | Grace Liu     |           3.0000 |
+|        30 | Freya Lund     |          1 | Alice Johnson |           3.0000 |
+|        30 | Freya Lund     |          5 | Ella Tran     |           1.0000 |
+|        31 | Gabriel Costa  |         11 | Karen Singh   |           5.0000 |
+|        31 | Gabriel Costa  |         20 | Tariq White   |           4.0000 |
+|        31 | Gabriel Costa  |          7 | Grace Liu     |           3.0000 |
+|        31 | Gabriel Costa  |          1 | Alice Johnson |           3.0000 |
+|        31 | Gabriel Costa  |          5 | Ella Tran     |           1.0000 |
+|        32 | Hana Sato      |         11 | Karen Singh   |           5.0000 |
+|        32 | Hana Sato      |         20 | Tariq White   |           4.0000 |
+|        32 | Hana Sato      |          7 | Grace Liu     |           3.0000 |
+|        32 | Hana Sato      |          1 | Alice Johnson |           3.0000 |
+|        32 | Hana Sato      |          9 | Isla Ahmed    |           1.0000 |
+|        33 | Ivan Petrov    |         11 | Karen Singh   |           5.0000 |
+|        33 | Ivan Petrov    |         20 | Tariq White   |           4.0000 |
+|        33 | Ivan Petrov    |          1 | Alice Johnson |           3.0000 |
+|        33 | Ivan Petrov    |          7 | Grace Liu     |           3.0000 |
+|        33 | Ivan Petrov    |          9 | Isla Ahmed    |           1.0000 |
+|        34 | Jade Lin       |         12 | Leo Brooks    |           4.0000 |
+|        35 | Karl Meier     |         12 | Leo Brooks    |           4.0000 |
+|        35 | Karl Meier     |         29 | Carla Dawson  |           1.0000 |
+|        36 | Leila Haddad   |         12 | Leo Brooks    |           4.0000 |
+|        36 | Leila Haddad   |         29 | Carla Dawson  |           1.0000 |
+|        37 | Matteo Bianchi |         24 | Xavier Miles  |           1.0000 |
+|        37 | Matteo Bianchi |         29 | Carla Dawson  |           1.0000 |
+|        38 | Nora Jensen    |         29 | Carla Dawson  |           1.0000 |
+|        38 | Nora Jensen    |         24 | Xavier Miles  |           1.0000 |
+|        39 | Oscar Alvarez  |         24 | Xavier Miles  |           1.0000 |
+|        40 | Priya Nair     |         24 | Xavier Miles  |           1.0000 |
+|        49 | Zane Walker    |         15 | Olivia Garcia |           3.0000 |
+|        49 | Zane Walker    |         13 | Maya Patel    |           1.0000 |
+|        50 | Alice Edwards  |         15 | Olivia Garcia |           3.0000 |
+|        50 | Alice Edwards  |         13 | Maya Patel    |           1.0000 |
++-----------+----------------+------------+---------------+------------------+
+61 rows in set (0.002 sec)

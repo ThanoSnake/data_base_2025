@@ -1,0 +1,11 @@
+MariaDB [pulse_uni_schema]> call staff_info(1);
++-------------+------------------+--------------+-----------------+----------------+-----------------+
+| festival_id | festival_name    | festival_day | techincal_staff | security_staff | assistant_staff |
++-------------+------------------+--------------+-----------------+----------------+-----------------+
+|           1 | TechWorld Summit | 2016-06-10   |               2 |             12 |               5 |
+|           1 | TechWorld Summit | 2016-06-11   |               2 |             14 |               6 |
+|           1 | TechWorld Summit | 2016-06-12   |               1 |              7 |               3 |
++-------------+------------------+--------------+-----------------+----------------+-----------------+
+3 rows in set (0.001 sec)
+
+Query OK, 0 rows affected (0.024 sec)

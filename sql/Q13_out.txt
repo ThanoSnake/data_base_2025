@@ -1,0 +1,42 @@
+MariaDB [pulse_uni_schema]> SELECT
+    -> a.artist_id,
+    -> a.artist_name,
+    -> COUNT(DISTINCT l.continent) AS num_continents
+    -> FROM artist a
+    -> JOIN performance_artist pa ON a.artist_id = pa.artist_id
+    -> JOIN performance p ON pa.performance_id = p.performance_id
+    -> JOIN event e ON p.event_id = e.event_id
+    -> JOIN festival f ON e.festival_id = f.festival_id
+    -> JOIN location l ON f.location_id = l.location_id
+    -> GROUP BY a.artist_id, a.artist_name
+    -> HAVING num_continents>=3
+    -> ORDER BY num_continents DESC;
++-----------+----------------+----------------+
+| artist_id | artist_name    | num_continents |
++-----------+----------------+----------------+
+|        28 | Beatriz Santos |              5 |
+|        33 | Ivan Petrov    |              5 |
+|        27 | Aiden Brooks   |              5 |
+|        32 | Hana Sato      |              5 |
+|        13 | Maya Delgado   |              5 |
+|         4 | Daniel Wu      |              4 |
+|        31 | Gabriel Costa  |              4 |
+|        36 | Leila Haddad   |              4 |
+|        25 | Yusuf El-Amin  |              4 |
+|        30 | Freya Lund     |              4 |
+|        35 | Karl Meier     |              4 |
+|        29 | Elias Romero   |              4 |
+|        34 | Jade Lin       |              4 |
+|        47 | Xavier Rojas   |              3 |
+|        12 | Liam Berg      |              3 |
+|        17 | Quinn Avery    |              3 |
+|        49 | Zane Walker    |              3 |
+|        46 | Wen Li         |              3 |
+|        19 | Samuel Ortega  |              3 |
+|        16 | Pedro Silva    |              3 |
+|        48 | Yara Mendes    |              3 |
+|        18 | Rina Kapoor    |              3 |
+|        26 | Zara Khalid    |              3 |
+|        50 | Alice Edwards  |              3 |
++-----------+----------------+----------------+
+24 rows in set (0.002 sec)
