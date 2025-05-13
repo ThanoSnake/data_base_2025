@@ -1,6 +1,109 @@
 
 
 
-🔹 Procedure: my_insert_resaler
-Περιγραφή:
-Η αποθηκευμένη διαδικασία my_insert_resaler χρησιμοποιείται για την εισαγωγή ενός εισιτηρίου προς μεταπώληση στον πίνακα resale_queue, καθώς και για την αυτόματη προσπάθεια αντιστοίχισής του με κάποιον διαθέσιμο αγοραστή. Δέχεται ως παραμέτρους το ticket_id, το visitor_id του πωλητή και την ημερομηνία/ώρα του αιτήματος (request_time). Αρχικά, καταχωρεί τα δεδομένα στον πίνακα resale_queue και στη συνέχεια, μέσω της εντολής SELECT LAST_INSERT_ID(), αποθηκεύει το αναγνωριστικό της νέας εγγραφής. Αμέσως μετά καλεί τη διαδικασία MatchResaler, η οποία ελέγχει αν υπάρχει κάποιος αγοραστής σε εκκρεμότητα που να ταιριάζει με το εισιτήριο, ώστε να προχωρήσει άμεσα η μεταπώληση. Έτσι, η my_insert_resaler λειτουργεί ως "entry point" για τη μεταπώληση, συνδυάζοντας την καταχώριση στην ουρά και τη δυναμική αντιστοίχιση σε μία ενιαία διαδικασία.
+--TRIGGER 9
+--We check if the buyer is valid / if they belong to the visitors, we verify their ID
+DELIMITER //
+DROP TRIGGER IF EXISTS new_buyer;
+CREATE TRIGGER new_buyer
+BEFORE INSERT ON buyer_interest_queue
+FOR EACH ROW
+BEGIN
+    DECLARE buyer_visitor_valid INT;
+    DECLARE ticket_for_sale INT;
+    DECLARE current_capacity INT;
+    DECLARE stage_capacity INT;
+    DECLARE last_purchase_time DATETIME;
+    DECLARE event_end_time DATETIME;
+    DECLARE flag INT;
+    DECLARE current_event INT;
+
+    IF NOT (NEW.ticket_id IS NOT NULL OR (NEW.event_id IS NOT NULL AND NEW.category IS NOT NULL)) THEN 
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Not enough information to buy a ticket';
+    END IF;
+
+    IF NEW.visitor_id IS NOT NULL THEN 
+        SELECT COUNT(*) INTO buyer_visitor_valid
+        FROM visitor
+        WHERE visitor_id = NEW.visitor_id AND visitor_name = NEW.buyer_name;
+
+        IF buyer_visitor_valid = 0 THEN 
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid match between buyer and visitor';
+        END IF;
+    END IF;
+
+
+    IF NEW.ticket_id IS NOT NULL THEN 
+        IF NEW.visitor_id IS NOT NULL THEN
+            SELECT event_id INTO current_event
+            FROM ticket 
+            WHERE ticket_id = NEW.ticket_id;
+
+            SELECT COUNT(*) INTO flag
+            FROM ticket t 
+            JOIN event e ON t.event_id = e.event_id
+            WHERE t.visitor_id = NEW.visitor_id AND e.event_id = current_event;
+
+            IF flag > 0 THEN 
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Buyer has already a ticket for this event';
+            END IF;
+        END IF;
+
+        SELECT COUNT(*) INTO ticket_for_sale
+        FROM resale_queue
+        WHERE ticket_id = NEW.ticket_id;
+
+        IF ticket_for_sale = 0 THEN 
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'This specific ticket is not for sale.';
+        END IF;
+    END IF;
+
+    IF NEW.event_id IS NOT NULL THEN
+        IF NEW.visitor_id IS NOT NULL THEN
+            SELECT COUNT(*) INTO FLAG 
+            FROM ticket 
+            WHERE event_id = NEW.event_id AND visitor_id = NEW.visitor_id;
+
+            IF flag > 0 THEN 
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Buyer has already a ticket for this event';
+            END IF;
+        END IF;
+
+        SELECT s.max_capacity INTO stage_capacity
+        FROM event e
+        JOIN stage s ON e.stage_id = s.stage_id
+        WHERE e.event_id = NEW.event_id;
+
+        SELECT COUNT(*) INTO current_capacity
+        FROM ticket
+        WHERE event_id = NEW.event_id;
+
+        IF current_capacity < stage_capacity THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Max attendance has not been achieved. There is no resale queue available for this event';
+        END IF;
+
+        #check if the event has ended before buyer enters buyer_interest queue#
+        SELECT end_time INTO event_end_time
+        FROM event 
+        WHERE event_id = NEW.event_id;
+        
+        IF TIMESTAMPDIFF(MINUTE, NEW.request_time, event_end_time) < 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Event has ended. Buyer cannot buy ticket for this event';
+        END IF; 
+
+        #check the request_time to be after the purchase_time of the last ticket#
+        SELECT purchase_time INTO last_purchase_time
+        FROM ticket
+        WHERE event_id = NEW.event_id
+        ORDER BY purchase_time DESC 
+        LIMIT 1;
+
+        IF TIMESTAMPDIFF(MINUTE, last_purchase_time, NEW.request_time) < 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'You cannot buy a ticket yet';
+        END IF; 
+    END IF;
+END//
+DELIMITER ;
