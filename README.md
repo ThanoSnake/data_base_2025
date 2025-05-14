@@ -12,3 +12,7 @@ Schema Design: A normalized schema featuring keys, constraints, triggers, and ch
 Performance Support: Designed for querying across a variety of use cases, including performance reviews, ticket sales, and equipment logistics.
 
 Scalable Design: Supports multiple festivals, locations, and years with minimal redundancy.
+
+
+
+![Alt text](https://github.com/ThanoSnake/data_base_2025/blob/main/diagrams/relational.png)
