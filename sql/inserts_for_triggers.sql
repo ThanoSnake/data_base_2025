@@ -14,7 +14,7 @@ INSERT INTO event (festival_id, stage_id, event_name, start_time, end_time) VALU
 INSERT INTO event (festival_id, stage_id, event_name, start_time, end_time) VALUES      #προσθήκη event την ίδια ωρα#
 (1, 30, 'test_event', '2016-06-10 9', '2016-06-10 10');     
 INSERT INTO staff_event (staff_id, event_id) VALUES
-(1, 51);  #ριξε το 52 σε 51 και γενικα ολα ενα κατω#
+(1, 51);  
 --TRIGGER 2/Ένας τεχνικός με παραπάνω από 2 αναθέσεις την ίδια μέρα
 INSERT INTO event (festival_id, stage_id, event_name, start_time, end_time) VALUES      #προσθήκη event την ίδια μέρα άλλη ώρα#
 (1, 29, 'test_event', '2016-06-10 13', '2016-06-10 14');
@@ -25,6 +25,7 @@ INSERT INTO staff_event (staff_id, event_id) VALUES         #3η ανάθεση 
 
 
 --PROCEDURE 1/Υποστελεχωμένο event
+CALL validate_event_staffing();
 
 
 --TRIGGER 3/Το performance εκτός των ωρών του event στο οποίο ανήκει
@@ -38,7 +39,7 @@ INSERT INTO performance (event_id, type_of_performance, start_time, end_time) VA
 (1, 'warm up', '2016-06-10 9:32:00', '2016-06-10 9:35:00');
 --TRIGGER 3/Break μεγαλύτερο από 30 minutes
 INSERT INTO performance (event_id, type_of_performance, start_time, end_time) VALUES
-(51, 'warm up', '2016-06-10 9:00:00', '2016-06-10 9:20:00');  #52 θα γινει 51# 
+(51, 'warm up', '2016-06-10 9:00:00', '2016-06-10 9:20:00');  
 INSERT INTO performance (event_id, type_of_performance, start_time, end_time) VALUES
 (51, 'warm up', '2016-06-10 10:10:00', '2016-06-10 10:20:00');
 
@@ -51,7 +52,7 @@ delete from festival where festival_id = 1;
 
 --TRIGGER 6/Artist εμφανίζεται ταυτόχρονα σε δύο σκηνές
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (101, 1);
---TRIGGER 6/Artist εμφανίζεται ταυτόχρονα σε δύο σκηνές*****
+--TRIGGER 6/Artist εμφανίζεται ταυτόχρονα σε δύο σκηνές
 --αυτό εμφανίζει για όλους τους artists τα χρονια συμμετοχής
 SELECT pa.artist_id,
 GROUP_CONCAT(DISTINCT YEAR(p.start_time))
