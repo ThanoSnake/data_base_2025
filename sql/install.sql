@@ -11,9 +11,12 @@ CREATE TABLE location (
     city VARCHAR(50) NOT NULL,
     country VARCHAR(50) NOT NULL,
     continent VARCHAR(50) NOT NULL,
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     CONSTRAINT unique_loc UNIQUE(latitude,longitude), #different location per year#
     PRIMARY KEY (location_id)
 );
+
 
 DROP TABLE IF EXISTS festival;
 CREATE TABLE festival (
@@ -23,6 +26,8 @@ CREATE TABLE festival (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     year INT GENERATED ALWAYS AS (YEAR(start_date)) STORED UNIQUE,
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (festival_id),
     KEY idx_festival_name(festival_name),
     KEY idx_fk_location_id(location_id),
@@ -31,15 +36,19 @@ CREATE TABLE festival (
     CONSTRAINT chk_festival_dates CHECK (end_date >= start_date)
 );
 
+
 DROP TABLE IF EXISTS stage;
 CREATE TABLE stage (
     stage_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     stage_name VARCHAR(100) NOT NULL,
     description VARCHAR(1000),
     max_capacity INT UNSIGNED CHECK(max_capacity>0),
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (stage_id),
     KEY idx_stage_name(stage_name)
 );
+
 
 DROP TABLE IF EXISTS event;
 CREATE TABLE event (
@@ -50,6 +59,8 @@ CREATE TABLE event (
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     duration INT GENERATED ALWAYS AS (TIMESTAMPDIFF(MINUTE, start_time, end_time)) STORED,
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (event_id),
     KEY idx_fk_festival_id(festival_id),
     KEY idx_fk_stage_id(stage_id),
@@ -61,6 +72,7 @@ CREATE TABLE event (
         REFERENCES stage(stage_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
+
 DROP TABLE IF EXISTS staff;
 CREATE TABLE staff (
     staff_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -69,11 +81,13 @@ CREATE TABLE staff (
     role VARCHAR(50) NOT NULL,
     experience_level VARCHAR(100) NOT NULL CHECK(experience_level IN ('Specialist','Beginner', 'Intermediate','Experienced', 'Very Experienced')),
     job VARCHAR(100) NOT NULL CHECK(job IN ('technical', 'security', 'assistant')),
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (staff_id),
     KEY idx_staff_name(staff_name)
 );
 
--- Technical Staff table (Τεχνικό)
+
 DROP TABLE IF EXISTS technical_staff;
 CREATE TABLE technical_staff (
     staff_id INT UNSIGNED NOT NULL,
@@ -98,12 +112,16 @@ CREATE TABLE staff_event (
         REFERENCES event(event_id) ON DELETE RESTRICT ON UPDATE CASCADE       
 );
 
+
 DROP TABLE IF EXISTS equipment;
 CREATE TABLE equipment (
     equipment_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     type VARCHAR(100) NOT NULL,
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (equipment_id)
 );
+
 
 DROP TABLE IF EXISTS stage_equipment;
 CREATE TABLE stage_equipment (
@@ -119,18 +137,21 @@ CREATE TABLE stage_equipment (
         REFERENCES stage(stage_id) ON DELETE RESTRICT ON UPDATE CASCADE        
 );
 
+
 DROP TABLE IF EXISTS artist;
 CREATE TABLE artist (
     artist_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     artist_name VARCHAR(100) NOT NULL,
     pseudonym VARCHAR(50),
-    birth_date DATE NOT NULL,  #there is a trgger#
-    #age INT GENERATED ALWAYS AS (TIMESTAMPDIFF(YEAR, birth_date, YEAR(NOW()))) STORED, CHECK(age>0),#
+    birth_date DATE NOT NULL,
     website VARCHAR(200) CHECK (website LIKE 'https://%'),
     instagram VARCHAR(200),
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (artist_id),
     INDEX idx_artist_name(artist_name)
 );
+
 
 DROP TABLE IF EXISTS performance;
 CREATE TABLE performance (
@@ -140,12 +161,15 @@ CREATE TABLE performance (
     start_time DATETIME NOT NULL,
     end_time DATETIME NOT NULL,
     duration INT GENERATED ALWAYS AS (TIMESTAMPDIFF(MINUTE, start_time, end_time)) STORED,
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (performance_id),
     KEY idx_fk_event_id(event_id),
     CONSTRAINT max_duration_performance CHECK (duration <= 180),
     CONSTRAINT fk_performance_event FOREIGN KEY (event_id) 
         REFERENCES event(event_id) ON DELETE RESTRICT ON UPDATE CASCADE
 ); 
+
 
 DROP TABLE IF EXISTS performance_artist;
 CREATE TABLE performance_artist (
@@ -172,6 +196,7 @@ CREATE TABLE artist_genre (
         REFERENCES artist(artist_id) ON DELETE RESTRICT ON UPDATE CASCADE  
 );
 
+
 DROP TABLE IF EXISTS band;
 CREATE TABLE band (
     band_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -179,8 +204,11 @@ CREATE TABLE band (
     formation_date DATE NOT NULL,
     website VARCHAR(200),
     instagram VARCHAR(200),
+    image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
+    image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (band_id)
 );
+
 
 DROP TABLE IF EXISTS band_genre;
 CREATE TABLE band_genre (
@@ -192,6 +220,7 @@ CREATE TABLE band_genre (
     CONSTRAINT fk_band_genre_band FOREIGN KEY (band_id) 
         REFERENCES band(band_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
 
 DROP TABLE IF EXISTS band_member;
 CREATE TABLE band_member (
@@ -238,7 +267,7 @@ CREATE TABLE ticket (
         REFERENCES visitor(visitor_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- Visitor Contact table (Επισκέπτης_Επικοινωνία)
+
 DROP TABLE IF EXISTS visitor_contact;
 CREATE TABLE visitor_contact (
     contact_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -251,6 +280,7 @@ CREATE TABLE visitor_contact (
     CONSTRAINT fk_visitor_contact_visitor FOREIGN KEY (visitor_id) 
         REFERENCES visitor(visitor_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
 
 DROP TABLE IF EXISTS resale_queue;
 CREATE TABLE resale_queue (
