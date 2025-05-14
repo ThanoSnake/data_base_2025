@@ -29,7 +29,7 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
  - **event:** Events taking place in festivals and stages
    
    
- - **staff:**Staff with roles, experience, and specialization
+ - **staff:** Staff with roles, experience, and specialization
 
    
   
@@ -39,12 +39,12 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
    
    
 
- - **staff_event:**Staff association with events
+ - **staff_event:** Staff association with events
 
    
  
 
- - **equipment:**Equipment types available at the festival
+ - **equipment:** Equipment types available at the festival
 
    
   
@@ -53,7 +53,7 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
    
    
 
- - **artist:**Artists with details and social profiles
+ - **artist:** Artists with details and social profiles
 
    
 
@@ -81,7 +81,7 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
 
    
 
- - **visitor:**Festival visitor information
+ - **visitor:** Festival visitor information
 
    
 
