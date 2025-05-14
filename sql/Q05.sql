@@ -3,7 +3,7 @@ SELECT
 a.artist_id,
 a.artist_name,
 a.pseudonym,
-TIMESTAMPDIFF(YEAR, a.birth_date, p.start_time) AS age,
+TIMESTAMPDIFF(YEAR, a.birth_date, NOW()) AS age,
 COUNT(DISTINCT YEAR(p.start_time)) AS total_festival_participations
 FROM artist a
 JOIN performance_artist pa ON a.artist_id = pa.artist_id
