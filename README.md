@@ -114,6 +114,7 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
 ##  Contributors
 
 Μιχαήλ Παναγόπουλος
+
 Αθανάσιος Φειδάκης
 
 
