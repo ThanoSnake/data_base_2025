@@ -44,64 +44,64 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
    
  
 
- - **equipment:** Τύποι εξοπλισμού διαθέσιμοι στο φεστιβάλ.
+ - **equipment:**Equipment types available at the festival
 
    
   
- - **stage_equipment:** Εξοπλισμός ανά σκηνή και ποσότητα.
+ - **stage_equipment:** Equipment by stage and quantity
 
    
    
 
- - **artist:** Καλλιτέχνες με στοιχεία και κοινωνικά προφίλ.
+ - **artist:**Artists with details and social profiles
 
    
 
- - **performance:** Εμφανίσεις καλλιτεχνών εντός εκδηλώσεων.
+ - **performance:** Artist performances within events
 
    
 
- - **performance_artist:** Συσχέτιση καλλιτεχνών με εμφανίσεις.
+ - **performance_artist:** Association of artists with performance.
 
    
 
- - **artist_genre:** Μουσικά είδη και υποείδη ανά καλλιτέχνη.
+ - **artist_genre:** Music genres and subgenres by artist
 
    
 
- - **band:** Μπάντες με ημερομηνία ίδρυσης και προφίλ.
+ - **band:** Bands with formation date and profile
 
    
 
- - **band_genre:** Μουσικά είδη και υποείδη ανά μπάντα.
+ - **band_genre:** Music genres and subgenres by band
 
    
 
- - **band_member:** Σύνδεση καλλιτεχνών με μπάντες.
+ - **band_member:** Artists' connection with bands.
 
    
 
- - **visitor:** Πληροφορίες επισκεπτών φεστιβάλ.
+ - **visitor:**Festival visitor information
 
    
 
- - **ticket:** Εισιτήρια για εκδηλώσεις και επισκέπτες.
+ - **ticket:** Tickets for events and visitors
 
    
 
- - **visitor_contact:** Τηλέφωνο και email επισκεπτών.
+ - **visitor_contact:** Visitor phone and email
 
    
 
- - **resale_queue**: Αιτήματα μεταπώλησης εισιτηρίων.
+ - **resale_queue**: Ticket resale requests
 
    
 
- - **buyer_interest_queue:** Αναμονή αγοραστών για εισιτήρια.
+ - **buyer_interest_queue:** Buyer interest queue for tickets
 
    
 
- - **review:** Αξιολογήσεις εμφανίσεων από επισκέπτες
+ - **review:** Performance reviews by visitors
 
 ##  Entity Related Diagram
 
