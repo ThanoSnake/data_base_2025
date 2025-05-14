@@ -249,24 +249,6 @@ DELIMITER ;
 
     
 
-
-#-------------------QUERY 8 ALTERNATIVE SOLUTION----------------WRONG AT THE MOMENT#
-DELIMITER //
-DROP PROCEDURE IF EXISTS free_assistant_staff_for_date;
-CREATE PROCEDURE free_assistant_staff_for_date (
-    IN specific_date DATE
-)
-BEGIN
-    SELECT DISTINCT s.*
-    FROM staff s
-    LEFT JOIN staff_event se ON s.staff_id = se.staff_id
-    LEFT JOIN event e ON se.event_id = e.event_id 
-        AND DATE(e.start_time) = specific_date
-    WHERE s.job = 'assistant'
-      AND e.event_id IS NULL;
-END //
-DELIMITER ;
-
 #-------------------QUERY 9----------------#
 
 WITH visitors_min_appearances AS (
