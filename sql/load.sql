@@ -1128,10 +1128,11 @@ INSERT INTO performance_artist(performance_id, artist_id) VALUES (3, 31);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (3, 32);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (3, 33);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (4, 19);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 49);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 50);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 25);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 26);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 29);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 30);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 31);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 32);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (5, 33);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (6, 34);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (6, 35);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (6, 36);
@@ -1148,10 +1149,11 @@ INSERT INTO performance_artist(performance_id, artist_id) VALUES (9, 25);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (9, 26);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (9, 27);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (9, 28);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 35);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 36);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 37);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 38);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 29);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 30);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 31);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 32);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (10, 33);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (11, 16);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (12, 37);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (12, 38);
@@ -1186,7 +1188,7 @@ INSERT INTO performance_artist(performance_id, artist_id) VALUES (24, 30);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (24, 31);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (24, 32);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (24, 33);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (25, 8);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (25, 15);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (26, 29);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (26, 30);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (26, 31);
@@ -1201,7 +1203,7 @@ INSERT INTO performance_artist(performance_id, artist_id) VALUES (28, 46);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (28, 47);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (28, 48);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (29, 13);
-INSERT INTO performance_artist(performance_id, artist_id) VALUES (30, 16);
+INSERT INTO performance_artist(performance_id, artist_id) VALUES (30, 15);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (31, 23);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (32, 21);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (33, 46);
@@ -1354,6 +1356,7 @@ INSERT INTO performance_artist(performance_id, artist_id) VALUES (99, 31);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (100, 34);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (100, 35);
 INSERT INTO performance_artist(performance_id, artist_id) VALUES (100, 36);
+
 
 
 
@@ -1812,7 +1815,7 @@ INSERT INTO review (visitor_id, performance_id, artist_performance, sound_lighti
 -- Visitor 7 (Event 2 - Performance 3)
 (7, 3, 3, 4, 3, 3, 3),
 -- Visitor 8 (Event 2 - Performance 4)
-(8, 4, 1, 3, 5, 4, 5),
+(8, 4, 2, 3, 5, 4, 5),
 -- Visitor 9 (Event 3 - Performance 5)
 (9, 5, 1, 3, 4, 2, 4),
 -- Visitor 11 (Event 3 - Performance 5)
@@ -1824,7 +1827,7 @@ INSERT INTO review (visitor_id, performance_id, artist_performance, sound_lighti
 -- Visitor 15 (Event 4 - Performance 7)
 (15, 7, 3, 4, 3, 3, 3),
 -- Visitor 16 (Event 4 - Performance 8)
-(16, 8, 5, 5, 5, 4, 5),
+(16, 8, 1, 1, 2, 4, 2),
 -- Visitor 17 (Event 5 - Performance 9)
 (17, 9, 5, 3, 4, 2, 4),
 -- Visitor 19 (Event 5 - Performance 9)
@@ -1844,7 +1847,7 @@ INSERT INTO review (visitor_id, performance_id, artist_performance, sound_lighti
 -- Visitor 28 (Event 7 - Performance 14)
 (28, 14, 4, 1, 4, 3, 2),
 -- Visitor 29 (Event 8 - Performance 15)
-(29, 15, 5, 4, 5, 4, 5);
+(29, 15, 1, 4, 2, 4, 3);
 
 
 
