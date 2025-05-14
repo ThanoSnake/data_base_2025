@@ -29,12 +29,14 @@ CREATE TABLE festival (
     image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
     image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
     PRIMARY KEY (festival_id),
-    KEY idx_festival_name(festival_name),
     KEY idx_fk_location_id(location_id),
     CONSTRAINT fk_festival_location FOREIGN KEY (location_id) 
         REFERENCES location(location_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT chk_festival_dates CHECK (end_date >= start_date)
 );
+CREATE INDEX idx_festival_id_festiva_name ON festival (festival_id, festival_name);
+CREATE INDEX idx_festival_start_date ON festival (start_date);
+CREATE INDEX idx_festival_end_date ON festival (end_date);
 
 
 DROP TABLE IF EXISTS stage;
@@ -45,8 +47,7 @@ CREATE TABLE stage (
     max_capacity INT UNSIGNED CHECK(max_capacity>0),
     image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
     image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
-    PRIMARY KEY (stage_id),
-    KEY idx_stage_name(stage_name)
+    PRIMARY KEY (stage_id)
 );
 
 
@@ -64,13 +65,14 @@ CREATE TABLE event (
     PRIMARY KEY (event_id),
     KEY idx_fk_festival_id(festival_id),
     KEY idx_fk_stage_id(stage_id),
-    KEY idx_event_name(event_name),
     CONSTRAINT valid_duration_event CHECK (duration BETWEEN 0 AND 720),
     CONSTRAINT fk_event_festival FOREIGN KEY (festival_id) 
         REFERENCES festival(festival_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT fk_event_stage FOREIGN KEY (stage_id) 
         REFERENCES stage(stage_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+CREATE INDEX idx_event_start_time ON event(start_time);
+CREATE INDEX idx_event_end_time ON event(end_time);
 
 
 DROP TABLE IF EXISTS staff;
@@ -83,9 +85,9 @@ CREATE TABLE staff (
     job VARCHAR(100) NOT NULL CHECK(job IN ('technical', 'security', 'assistant')),
     image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
     image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
-    PRIMARY KEY (staff_id),
-    KEY idx_staff_name(staff_name)
+    PRIMARY KEY (staff_id)
 );
+CREATE INDEX idx_staff_job on staff(job);
 
 
 DROP TABLE IF EXISTS technical_staff;
@@ -148,9 +150,10 @@ CREATE TABLE artist (
     instagram VARCHAR(200),
     image VARCHAR(200) NOT NULL DEFAULT ('https://dummyimage.com') CHECK (image LIKE 'https://%'),
     image_caption VARCHAR(1000) NOT NULL DEFAULT ('dummy image description'),
-    PRIMARY KEY (artist_id),
-    INDEX idx_artist_name(artist_name)
+    PRIMARY KEY (artist_id)
 );
+CREATE INDEX idx_artist_id_artist_name_pseudonym ON artist(artist_id, artist_name, pseudonym);
+CREATE INDEX idx_artist_name ON artist(artist_name);
 
 
 DROP TABLE IF EXISTS performance;
@@ -169,7 +172,9 @@ CREATE TABLE performance (
     CONSTRAINT fk_performance_event FOREIGN KEY (event_id) 
         REFERENCES event(event_id) ON DELETE RESTRICT ON UPDATE CASCADE
 ); 
-
+CREATE INDEX idx_performance_start_time ON performance (start_time);
+CREATE INDEX idx_performance_end_time ON performance (end_time);
+CREATE INDEX idx_type_of_performance ON performance (type_of_performance);
 
 DROP TABLE IF EXISTS performance_artist;
 CREATE TABLE performance_artist (
@@ -195,6 +200,7 @@ CREATE TABLE artist_genre (
     CONSTRAINT fk_artist_genre_artist FOREIGN KEY (artist_id) 
         REFERENCES artist(artist_id) ON DELETE RESTRICT ON UPDATE CASCADE  
 );
+CREATE INDEX idx_artist_genre ON artist_genre (genre);
 
 
 DROP TABLE IF EXISTS band;
@@ -241,9 +247,11 @@ CREATE TABLE visitor (
     visitor_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     visitor_name VARCHAR(100) NOT NULL,
     age INT UNSIGNED CHECK(age>0),
-    PRIMARY KEY (visitor_id),
-    KEY idx_visitor_name(visitor_name)
+    PRIMARY KEY (visitor_id)
 );
+CREATE INDEX idx_visitor_name ON visitor (visitor_name);
+CREATE INDEX idx_visitor_id_visitor_name ON visitor (visitor_id, visitor_name);
+
 
 
 DROP TABLE IF EXISTS ticket;
@@ -296,6 +304,7 @@ CREATE TABLE resale_queue (
     CONSTRAINT fk_resale_queue_visitor FOREIGN KEY (visitor_id) 
         REFERENCES visitor(visitor_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+CREATE INDEX idx_resale_queue_request_time ON resale_queue(request_time);
 
 DROP TABLE IF EXISTS buyer_interest_queue;
 CREATE TABLE buyer_interest_queue (
@@ -318,6 +327,7 @@ CREATE TABLE buyer_interest_queue (
     CONSTRAINT fk_buyer_interest_queue_event FOREIGN KEY (event_id) 
         REFERENCES event(event_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+CREATE INDEX idx_buyer_interest_queue_request_time ON buyer_interest_queue(request_time);
 
 
 DROP TABLE IF EXISTS review;
