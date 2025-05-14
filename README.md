@@ -18,28 +18,28 @@ Welcome to the Pulse Festival Database! This project provides a structured and s
 
 
 
- - **location:** Πληροφορίες τοποθεσίας για φεστιβάλ (διεύθυνση, συντεταγμένες, πόλη, χώρα).
+ - **location:** Festival location information (address, coordinates, city, country)
  
- - **festival:** Στοιχεία φεστιβάλ ανά έτος και τοποθεσία.
+ - **festival:** Festival details by year and location
    
    
- - **stage:** Δεδομένα για σκηνές (όνομα, περιγραφή, χωρητικότητα).
+ - **stage:** Stage data (name, description, capacity)
    
    
- - **event:** Εκδηλώσεις που λαμβάνουν χώρα σε φεστιβάλ και σκηνές.
+ - **event:** Events taking place in festivals and stages
    
    
- - **staff:** Προσωπικό με ρόλους, εμπειρία και ειδικότητα.
+ - **staff:**Staff with roles, experience, and specialization
 
    
   
 
- - **technical_staff:** Τεχνικό προσωπικό με εξειδίκευση.
+ - **technical_staff:** Technical staff with specialization
 
    
    
 
- - **staff_event:** Συσχέτιση προσωπικού με εκδηλώσεις.
+ - **staff_event:**Staff association with events
 
    
  
